@@ -1,3 +1,5 @@
+const Car = require('./Backend/models/cars.js');
+
 const express = require('express');
 const cors = require ('cors');
 const morgan = require('morgan');
@@ -17,12 +19,16 @@ app.use(morgan('dev'));
 app.use(helmet());
 // END MIDDLEWARE
 
-app.post('/cars', (req,res) => {
 
 
+app.get('/cars', async (req,res) => {
+    let carDB = await Car.find();
+    res.send(carDB); 
 })
 
-app.get('/cars', (req,res) => {
+app.post('/cars', async (req,res) => {
+    let response = await Car.create(req.body);
+    res.send(response);
 
 })
 
