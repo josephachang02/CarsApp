@@ -4,7 +4,6 @@ import axios from 'axios';
 const CarsForm = () => {
   
   const [carData, setCarData] = useState({
-    title: '',
     make: '',
     model: '',
     description: '',
@@ -60,16 +59,6 @@ const CarsForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={carData.title}
-            onChange={handleInputChange}
-          />
-        </div>
 
         <div>
           <label htmlFor="make">Make:</label>
@@ -116,9 +105,9 @@ const CarsForm = () => {
         </div>
 
         <div>
-          <label htmlFor="description">Image:</label>
+          <label htmlFor="description">Image URL:</label>
           <input
-            type="image"
+            type="string"
             id="image"
             name="image"
             value={carData.image}

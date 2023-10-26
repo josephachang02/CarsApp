@@ -19,7 +19,7 @@ const CarList = () => {
 
   return (
     <div className="car-list">
-        <h2 className='car-title'>Event List:</h2>
+        <h2 className='car-title'>Cars List:</h2>
       {cars.map(cars => (
         <div key={cars.id} className="car-item">
           <h2>{cars.make} {cars.model} {cars.year}</h2>
