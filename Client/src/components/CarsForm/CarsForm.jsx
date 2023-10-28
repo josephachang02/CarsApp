@@ -6,18 +6,18 @@ const CarsForm = () => {
   const [carData, setCarData] = useState({
     make: '',
     model: '',
-    description: '',
+    color: '',
     year: '',
     image: ''
   })
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setCarData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setCarData(prevState => ({
+  //     ...prevState,
+  //     [name]: value
+  //   }));
+  // };
 
 //   const handleOrganizerChange = (e) => {
 //     const { name, value } = e.target;
@@ -30,90 +30,36 @@ const CarsForm = () => {
 //     }));
 //   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios({
-        url: '/server/events',
-        method: "POST",
-        data: carData
-      });
-      if (response.status >= 200 && response.status < 300) {
-        console.log('Event registered successfully:', response.data);
-      } else {
-        console.error('Error registering event:', response.data);
-      }
-    } catch (error) {
-      console.error('There was an error sending the request:', error);
-    }
-    setCarData({
-        title: '',
-        make: '',
-        model: '',
-        description: '',
-        year: '',
-        image: ''
-    })
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+    axios({
+      method: "POST",
+      url: "/server/cars",
+      data: carData // YOU WILL FIND THIS DATA IN ***req.body*** OF THE ROUTE
+  }).then((res)=>{
+      console.log(res.data);
+      setCarData({
+          make: "",
+          model: "",
+          color: "",
+          year: "",
+          image: ""
+      })
+     
+  })
+}
+
 
   return (
     <div>
+      <h1>Add a New Vehicle to your List</h1>
       <form onSubmit={handleSubmit}>
 
-        <div>
-          <label htmlFor="make">Make:</label>
-          <input
-            type="text"
-            id="make"
-            name="make"
-            value={carData.make}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="model">Model:</label>
-          <input
-            type="text"
-            id="model"
-            name="model"
-            value={carData.model}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="description">Description:</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            value={carData.description}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="year">Year:</label>
-          <input
-            type="number"
-            id="year"
-            name="year"
-            value={carData.year}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="description">Image URL:</label>
-          <input
-            type="string"
-            id="image"
-            name="image"
-            value={carData.image}
-            onChange={handleInputChange}
-          />
-        </div>
+      Brand: <input type="text" name="make" value={carData.make} onChange={(e) => setCarData({...carData, make: e.target.value})} /><br/>
+                Model: <input type="text" name="model" value={carData.model} onChange={(e) => setCarData({...carData, model: e.target.value})} /><br/>
+                Color: <input type="text" name="color" value={carData.color} onChange={(e) => setCarData({...carData, color: e.target.value})} /><br/>
+                Year: <input type="text" name="year" value={carData.year} onChange={(e) => setCarData({...carData, year: e.target.value})} /><br/>
+                Image Link: <input type="text" name="image" value={carData.image} onChange={(e) => setCarData({...carData, image: e.target.value})} /><br/>
 
         <button type="submit">Submit Car to Form</button>
       </form>

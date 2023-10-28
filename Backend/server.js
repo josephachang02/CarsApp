@@ -5,7 +5,7 @@ const cors = require ('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 require('dotenv').config();
-const PORT = 3000;
+const PORT = 3500;
 require('./config/db.js')
 
 const app = express();
@@ -32,6 +32,7 @@ app.post('/cars', async (req,res) => {
 
 })
 
-app.get('/cars/:carName', (req,res) => {
-    
+app.get('/cars/:carName', async (req,res) => {
+    let carName = await Car.find(req.body.name);
+    res.send(carName)
 })
